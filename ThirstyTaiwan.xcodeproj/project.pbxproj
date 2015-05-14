@@ -103,8 +103,7 @@
 				F131C1531ABF981A0091F292 /* Images.xcassets */,
 				F131C1461ABF981A0091F292 /* Supporting Files */,
 			);
-			name = ThirstyTaiwan;
-			path = "helloworld-objective-c";
+			path = ThirstyTaiwan;
 			sourceTree = "<group>";
 		};
 		F131C1461ABF981A0091F292 /* Supporting Files */ = {
@@ -122,8 +121,7 @@
 				F131C1621ABF981A0091F292 /* ThirstyTaiwanTests.m */,
 				F131C1601ABF981A0091F292 /* Supporting Files */,
 			);
-			name = ThirstyTaiwanTests;
-			path = "helloworld-objective-cTests";
+			path = ThirstyTaiwanTests;
 			sourceTree = "<group>";
 		};
 		F131C1601ABF981A0091F292 /* Supporting Files */ = {

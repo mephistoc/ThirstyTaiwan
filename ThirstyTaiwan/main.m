@@ -1,9 +1,9 @@
 //
 //  main.m
-//  ThirstyTaiwan
+//  helloworld-objective-c
 //
-//  Created by Vincent Chu on 5/14/15.
-//  Copyright (c) 2015 Vincent Chu. All rights reserved.
+//  Created by CHENHSIN-PANG on 2015/3/23.
+//  Copyright (c) 2015年 CinnamonRoll. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>

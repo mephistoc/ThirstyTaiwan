@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		23571CC41B08FB6A00442D80 /* DamController.m in Sources */ = {isa = PBXBuildFile; fileRef = 23571CC31B08FB6A00442D80 /* DamController.m */; };
 		6ED5A2C653BFF22D359C7B7D /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AF527D3ADD7B543AAA891B1F /* libPods.a */; };
 		F131C1491ABF981A0091F292 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F131C1481ABF981A0091F292 /* main.m */; };
 		F131C14C1ABF981A0091F292 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F131C14B1ABF981A0091F292 /* AppDelegate.m */; };
@@ -22,11 +23,12 @@
 			containerPortal = F131C13B1ABF981A0091F292 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = F131C1421ABF981A0091F292;
-			remoteInfo = "helloworld-objective-c";
+			remoteInfo = ThirstyTaiwan;
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		23571CC31B08FB6A00442D80 /* DamController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DamController.m; sourceTree = "<group>"; };
 		96C98B82B02AA1019A26C366 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		A0DC1CAAB6E026245BB1C67C /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		AF527D3ADD7B543AAA891B1F /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -64,6 +66,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		23571CC21B08FB0C00442D80 /* FetchFromRemote */ = {
+			isa = PBXGroup;
+			children = (
+				23571CC31B08FB6A00442D80 /* DamController.m */,
+			);
+			name = FetchFromRemote;
+			sourceTree = "<group>";
+		};
 		DBCFB9F13CEA72C244B6965A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -95,6 +105,7 @@
 		F131C1451ABF981A0091F292 /* ThirstyTaiwan */ = {
 			isa = PBXGroup;
 			children = (
+				23571CC21B08FB0C00442D80 /* FetchFromRemote */,
 				F14A1CB51AC0FEE100E5EC08 /* TableView */,
 				F131C14A1ABF981A0091F292 /* AppDelegate.h */,
 				F131C14B1ABF981A0091F292 /* AppDelegate.m */,
@@ -168,7 +179,7 @@
 			dependencies = (
 			);
 			name = ThirstyTaiwan;
-			productName = "helloworld-objective-c";
+			productName = ThirstyTaiwan;
 			productReference = F131C1431ABF981A0091F292 /* ThirstyTaiwan.app */;
 			productType = "com.apple.product-type.application";
 		};
@@ -186,7 +197,7 @@
 				F131C15E1ABF981A0091F292 /* PBXTargetDependency */,
 			);
 			name = ThirstyTaiwanTests;
-			productName = "helloworld-objective-cTests";
+			productName = ThirstyTaiwanTests;
 			productReference = F131C15C1ABF981A0091F292 /* ThirstyTaiwanTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
@@ -287,6 +298,7 @@
 				F131C14F1ABF981A0091F292 /* ViewController.m in Sources */,
 				F131C14C1ABF981A0091F292 /* AppDelegate.m in Sources */,
 				F131C1491ABF981A0091F292 /* main.m in Sources */,
+				23571CC41B08FB6A00442D80 /* DamController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -391,7 +403,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				INFOPLIST_FILE = "helloworld-objective-c/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/ThirstyTaiwan/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = ThirstyTaiwan;
 			};
@@ -403,7 +415,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				INFOPLIST_FILE = "helloworld-objective-c/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/ThirstyTaiwan/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = ThirstyTaiwan;
 			};
@@ -421,10 +433,10 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = "helloworld-objective-cTests/Info.plist";
+				INFOPLIST_FILE = ThirstyTaiwanTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = ThirstyTaiwanTests;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/helloworld-objective-c.app/helloworld-objective-c";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ThirstyTaiwan.app/ThirstyTaiwan";
 			};
 			name = Debug;
 		};
@@ -436,10 +448,10 @@
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = "helloworld-objective-cTests/Info.plist";
+				INFOPLIST_FILE = ThirstyTaiwanTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = ThirstyTaiwanTests;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/helloworld-objective-c.app/helloworld-objective-c";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ThirstyTaiwan.app/ThirstyTaiwan";
 			};
 			name = Release;
 		};

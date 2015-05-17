@@ -109,7 +109,8 @@ static NSInteger damCount;
     NSDictionary *dam = [waterArray objectAtIndex:indexPath.row];
     cell.textLabel.text = [NSString stringWithFormat:@"%@ 目前蓄水量：%@",
                            [dam valueForKey:@"reservoirName"],
-                           [dam valueForKey:@"immediatePercentage"]] ;
+                           //[dam valueForKey:@"immediatePercentage"]
+                           [dam valueForKey:@"immediateStorage"]] ;
 
     if(indexPath.row%2)
     {

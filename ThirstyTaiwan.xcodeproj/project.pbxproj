@@ -29,6 +29,7 @@
 
 /* Begin PBXFileReference section */
 		23571CC31B08FB6A00442D80 /* DamController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DamController.m; sourceTree = "<group>"; };
+		23571CC51B0A4FA800442D80 /* DamController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DamController.h; sourceTree = "<group>"; };
 		96C98B82B02AA1019A26C366 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		A0DC1CAAB6E026245BB1C67C /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		AF527D3ADD7B543AAA891B1F /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -70,6 +71,7 @@
 			isa = PBXGroup;
 			children = (
 				23571CC31B08FB6A00442D80 /* DamController.m */,
+				23571CC51B0A4FA800442D80 /* DamController.h */,
 			);
 			name = FetchFromRemote;
 			sourceTree = "<group>";

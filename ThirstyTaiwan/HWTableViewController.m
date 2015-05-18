@@ -8,6 +8,7 @@
 
 #import "HWTableViewController.h"
 #import "MBProgressHUD.h"
+#import "DamController.h"
 
 @interface HWTableViewController ()<UITableViewDataSource, UITableViewDelegate>
 //Method which provide fake data for test.
@@ -20,6 +21,7 @@
 static NSArray *waterArray;
 static NSMutableData *responseData;
 static NSInteger damCount;
+
 @implementation HWTableViewController
 
 - (void)viewDidLoad {
@@ -31,7 +33,7 @@ static NSInteger damCount;
     
     tableView.dataSource = self; // 需要在上面宣告這個class有實作 UITableViewDataSource
     tableView.delegate = self;
-    
+
     self.tableView = tableView; // 把local variable設給這個物件的property，是方便存取。
 
     // Initialize the refresh control.
@@ -45,27 +47,11 @@ static NSInteger damCount;
     
     // Set remote URL detail
     responseData = [[NSMutableData alloc]init];
-    NSURL *url = [[NSURL alloc] initWithString:@"http://128.199.223.114:10080/today"];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
-    [request setValue:@"application/json" forHTTPHeaderField:@"accept"];
-    [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-
+    DamController *damController = [[DamController alloc]init];
+    NSMutableURLRequest *request = [damController GetDamStatus: @"http://128.199.223.114:10080/today"];
     // MBProgressHUD
-//    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-//    dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
-//        // Do something...
-//        dispatch_async(dispatch_get_main_queue(), ^{
-//            [MBProgressHUD hideHUDForView:self.view animated:YES];
-//        });
-//    });
-    
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-//    [self doSomethingInBackgroundWithProgressCallback:^(float progress) {
-//        hud.progress = progress;
-//    } completionCallback:^{
-//        [hud hide:YES];
-//    }];
-    
+
     // Get remote JSON data.
     (void)[NSURLConnection connectionWithRequest:request delegate:self];
 }

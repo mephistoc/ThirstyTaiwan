@@ -7,10 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "DamController.h"
 
-@interface DamController : NSObject
-
--(NSMutableURLRequest *) GetDamStatus : (NSString *)remoteURL;
+@interface DamController ()
 
 @end
 

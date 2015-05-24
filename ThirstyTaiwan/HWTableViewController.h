@@ -10,4 +10,6 @@
 
 @interface HWTableViewController : UIViewController
 
+-(NSArray *) convertDamToNSArray : (NSMutableData *)response;
+
 @end

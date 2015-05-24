@@ -11,8 +11,8 @@
 #import "DamController.h"
 
 @interface HWTableViewController ()<UITableViewDataSource, UITableViewDelegate>
-//Method which provide fake data for test.
--(NSString*)getFakeWaterData;
+
+-(NSArray *)convertDamToNSArray: (NSMutableData *)response;
 
 @property(nonatomic, weak)UITableView   *tableView;
 @property(nonatomic, weak)UIRefreshControl *refreshControl; // Implement pull down refresh behavior.
@@ -21,6 +21,11 @@
 static NSArray *waterArray;
 static NSMutableData *responseData;
 static NSInteger damCount;
+
+static NSString *const _DATA_SOURCE = @"http://128.199.223.114:10080/today";
+static NSString *const _DAM_MESSAGE = @"%@ 目前蓄水量：%@";
+static NSString *const _DAM_NAME = @"reservoirName";
+static NSString *const _DAM_CAPACITY = @"immediateStorage";
 
 @implementation HWTableViewController
 
@@ -48,9 +53,10 @@ static NSInteger damCount;
     // Set remote URL detail
     responseData = [[NSMutableData alloc]init];
     DamController *damController = [[DamController alloc]init];
-    NSMutableURLRequest *request = [damController GetDamStatus: @"http://128.199.223.114:10080/today"];
     // MBProgressHUD
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    
+    NSMutableURLRequest *request = [damController GetDamStatus: _DATA_SOURCE];
 
     // Get remote JSON data.
     (void)[NSURLConnection connectionWithRequest:request delegate:self];
@@ -93,27 +99,18 @@ static NSInteger damCount;
     cell.backgroundColor = (indexPath.row%2)?[UIColor lightGrayColor]:[UIColor grayColor];
     // Get dam information from static variable "waterArray" in the waters dictionary object.
     NSDictionary *dam = [waterArray objectAtIndex:indexPath.row];
-    cell.textLabel.text = [NSString stringWithFormat:@"%@ 目前蓄水量：%@",
-                           [dam valueForKey:@"reservoirName"],
+    cell.textLabel.text = [NSString stringWithFormat: _DAM_MESSAGE,
+                           [dam valueForKey: _DAM_NAME],
                            //[dam valueForKey:@"immediatePercentage"]
-                           [dam valueForKey:@"immediateStorage"]] ;
+                           [dam valueForKey: _DAM_CAPACITY]] ;
 
-    if(indexPath.row%2)
-    {
-        cell.detailTextLabel.text = [NSString stringWithFormat:@"%ld", (long)indexPath.row];
-    }else
-    {
-        cell.detailTextLabel.text = [NSString stringWithFormat:@"%ld", (long)indexPath.row];
-    }
-
+    cell.detailTextLabel.text = [NSString stringWithFormat:@"%ld", (long)indexPath.row];
     
     return cell;
 }
 
-// 上面三個是資料基本的DataSource
 -(NSString*)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-//    return [NSString stringWithFormat:@"Section %ld", (long)section];
     return @"目前水庫蓄水量";
 }
 
@@ -128,7 +125,7 @@ static NSInteger damCount;
 #pragma mark - NSURLConnection Delegates
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error  {
-    
+    NSLog(@"Error occur when retriving data: %@", [error localizedDescription]);
 }
 
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response   {
@@ -142,83 +139,26 @@ static NSInteger damCount;
 }
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection    {
-    // Get dam data from remote in JSON format.
-    NSString *responseString = [[NSString alloc]initWithData:responseData encoding:NSUTF8StringEncoding];
-    NSData *waterData = [responseString dataUsingEncoding:NSUTF8StringEncoding];
-    NSDictionary *waters = [NSJSONSerialization JSONObjectWithData:waterData options:0 error:nil];
-    waterArray = [waters valueForKey:@"data"];
-    NSLog(@"%@",responseString);
     
+    // Get dam data from remote in JSON format.
+    waterArray = [self convertDamToNSArray:responseData];
     damCount = [waterArray count];
     
     [MBProgressHUD hideHUDForView:self.view animated:NO];
     [[self tableView] reloadData];
 }
 
--(NSString*)getFakeWaterData
-{
-    NSString *rtnString = @"{"
-    "    \"data\": [{"
-    //NSString *rtnString = @"{"
-    "    \"reservoirName\": \"石門水庫\","
-    "    \"baseAvailable\": \"20,123.60\","
-    "    \"daliyTime\": \"起:2015-03-29(0時)迄:2015-03-30(0時)\","
-    "    \"daliyRainfall\": \"0.00\","
-    "    \"daliyInflow\": \"175.13\","
-    "    \"daliyOverflow\": \"68.77\","
-    "    \"daliyDetector\": \"0.29\","
-    "    \"concentration\": \"--\","
-    "    \"immediateTime\": \"2015-03-29(23時)\","
-    "    \"immediateLevel\": \"219.95\","
-    "    \"immediateStorage\": \"4,974.60\","
-    "    \"immediatePercentage\": \"24.72%\","
-    "    \"lastedUpdateTime\": \"2015-03-30 02:00:01\""
-    "  }, {"
-    "    \"reservoirName\": \"新山水庫\","
-    "    \"baseAvailable\": \"1,002.00\","
-    "    \"daliyTime\": \"起:2015-03-29(0時)迄:2015-03-30(0時)\","
-    "    \"daliyRainfall\": \"0.00\","
-    "    \"daliyInflow\": \"0.00\","
-    "    \"daliyOverflow\": \"0.92\","
-    "    \"daliyDetector\": \"--\","
-    "    \"concentration\": \"--\","
-    "    \"immediateTime\": \"2015-03-29(8時)\","
-    "    \"immediateLevel\": \"82.94\","
-    "    \"immediateStorage\": \"825.24\","
-    "    \"immediatePercentage\": \"82.36%\","
-    "    \"lastedUpdateTime\": \"2015-03-30 02:00:01\""
-    "  }, {"
-    "    \"reservoirName\": \"翡翠水庫\","
-    "    \"baseAvailable\": \"33,550.50\","
-    "    \"daliyTime\": \"起:2015-03-29(0時)迄:2015-03-30(0時)\","
-    "    \"daliyRainfall\": \"0.00\","
-    "    \"daliyInflow\": \"201.60\","
-    "    \"daliyOverflow\": \"0.00\","
-    "    \"daliyDetector\": \"0.29\","
-    "    \"concentration\": \"--\","
-    "    \"immediateTime\": \"2015-03-29(23時)\","
-    "    \"immediateLevel\": \"165.92\","
-    "    \"immediateStorage\": \"29,833.24\","
-    "    \"immediatePercentage\": \"88.92%\","
-    "    \"lastedUpdateTime\": \"2015-03-30 02:00:01\""
-    "  }, {"
-    "    \"reservoirName\": \"寶山水庫\","
-    "    \"baseAvailable\": \"538.00\","
-    "    \"daliyTime\": \"起:2015-03-29(0時)迄:2015-03-30(0時)\","
-    "    \"daliyRainfall\": \"0.00\","
-    "    \"daliyInflow\": \"8.64\","
-    "    \"daliyOverflow\": \"4.96\","
-    "    \"daliyDetector\": \"--\","
-    "    \"concentration\": \"--\","
-    "    \"immediateTime\": \"2015-03-29(7時)\","
-    "    \"immediateLevel\": \"135.53\","
-    "    \"immediateStorage\": \"220.70\","
-    "    \"immediatePercentage\": \"41.02%\","
-    "    \"lastedUpdateTime\": \"2015-03-30 02:00:01\""
-    //“  }";
-    " }]"
-    "}";
-    return rtnString;
-}
+// Convert response data to an array which more easy to use for table view.
+-(NSArray *)convertDamToNSArray:(NSMutableData *)response {
+    NSArray *rtnArray;
+    // Get dam data from remote in JSON format.
+    NSString *responseString = [[NSString alloc]initWithData:responseData encoding:NSUTF8StringEncoding];
+    NSData *waterData = [responseString dataUsingEncoding:NSUTF8StringEncoding];
+    NSDictionary *waters = [NSJSONSerialization JSONObjectWithData:waterData options:0 error:nil];
+    rtnArray = [waters valueForKey:@"data"];
 
+    NSLog(@"%@",responseString);
+
+    return rtnArray;
+}
 @end

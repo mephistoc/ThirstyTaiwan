@@ -13,6 +13,7 @@
 @interface HWTableViewController ()<UITableViewDataSource, UITableViewDelegate>
 
 -(NSArray *)convertDamToNSArray: (NSMutableData *)response;
+-(void)refreshDamStatus:(UIRefreshControl *)refresh;
 
 @property(nonatomic, weak)UITableView   *tableView;
 @property(nonatomic, weak)UIRefreshControl *refreshControl; // Implement pull down refresh behavior.
@@ -21,6 +22,7 @@
 static NSArray *waterArray;
 static NSMutableData *responseData;
 static NSInteger damCount;
+static DamController *damController;
 
 static NSString *const _DATA_SOURCE = @"http://128.199.223.114:10080/today";
 static NSString *const _DAM_MESSAGE = @"%@ 目前蓄水量：%@";
@@ -43,16 +45,20 @@ static NSString *const _DAM_CAPACITY = @"immediateStorage";
 
     // Initialize the refresh control.
     UIRefreshControl *refCtl = [[UIRefreshControl alloc] init];
-    refCtl.backgroundColor = [UIColor purpleColor];
+    refCtl.backgroundColor = [UIColor colorWithRed:0.102 green:0.588 blue:0.91 alpha:1];
     refCtl.tintColor = [UIColor whiteColor];
-//    [refCtl addTarget:self
-//               action:@selector(connectionDidFinishLoading)
-//     forControlEvents:UIControlEventValueChanged];
+    refCtl.attributedTitle = [[NSAttributedString alloc] initWithString:@"I am working..."];
+    [self.refreshControl addTarget:self
+                            action:@selector(refreshDamStatus:)
+                  forControlEvents:UIControlEventValueChanged];
     self.refreshControl = refCtl;
+    [self.tableView addSubview:self.refreshControl];
     
     // Set remote URL detail
     responseData = [[NSMutableData alloc]init];
-    DamController *damController = [[DamController alloc]init];
+    if(damController == nil){
+        damController = [[DamController alloc]init];
+    }
     // MBProgressHUD
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     
@@ -161,4 +167,18 @@ static NSString *const _DAM_CAPACITY = @"immediateStorage";
 
     return rtnArray;
 }
+
+-(void)refreshDamStatus:(UIRefreshControl *)refresh{
+    refresh.attributedTitle = [[NSAttributedString alloc]initWithString:@"Working..."];
+    
+    if(damController != nil){
+        damController = [[DamController alloc] init];
+    }
+    NSMutableURLRequest *request = [damController GetDamStatus: _DATA_SOURCE];
+    
+    // Get remote JSON data.
+    (void)[NSURLConnection connectionWithRequest:request delegate:self];
+    [refresh endRefreshing];
+}
+
 @end
